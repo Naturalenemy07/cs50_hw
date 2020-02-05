@@ -21,9 +21,9 @@ int main(void)
     double number_of_sentences = count_sentences(text); //function that counts the number of sentences
     printf("%f sentence(s)\n", number_of_sentences);  //prints the number of sentences
 
-    double L_scaled = number_of_letters / number_of_words * 100;
-    double S_scaled = number_of_sentences / number_of_words * 100;
-    printf("L_scaled: %f\n",L_scaled);
+    double L_scaled = number_of_letters / number_of_words * 100;//should be the average number of letters per 100 words in the text
+    double S_scaled = number_of_sentences / number_of_words * 100;//should be the average number of sentences per 100 words in the text
+    printf("L_scaled: %f\n",L_scaled);//i printed these for troube shooting
     printf("S_scaled: %f\n",S_scaled);
 
     int index = round(0.0588 * L_scaled + 0.296 * S_scaled - 15.8);
