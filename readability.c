@@ -21,19 +21,19 @@ int main(void)
     double number_of_sentences = count_sentences(text); //function that counts the number of sentences
     printf("%f sentence(s)\n", number_of_sentences);  //prints the number of sentences
 
-    double L_scaled = number_of_letters / number_of_words * 100;//should be the average number of letters per 100 words in the text
-    double S_scaled = number_of_sentences / number_of_words * 100;//should be the average number of sentences per 100 words in the text
-    printf("L_scaled: %f\n",L_scaled);//i printed these for troube shooting
-    printf("S_scaled: %f\n",S_scaled);
+    double L_scaled = number_of_letters / number_of_words * 100;
+    double S_scaled = number_of_sentences / number_of_words * 100;
+    //printf("L_scaled: %f\n", L_scaled);
+    //printf("S_scaled: %f\n", S_scaled);
 
-    int index = round(0.0588 * L_scaled + 0.296 * S_scaled - 15.8);
+    int index = round(0.0588 * L_scaled - 0.296 * S_scaled - 15.8);
 
-    if(index < 0)
+    if (index < 0)
     {
         printf("Before Grade 1\n");
     }
 
-    else if(index >= 16)
+    else if (index >= 16)
     {
         printf("Grade 16+\n");
     }
@@ -50,7 +50,7 @@ int count_letters(string t)  //counter for the amount of letters
 {
     int L = 0;
 
-    for(int i = 0, n = strlen(t); i < n; i++)
+    for (int i = 0, n = strlen(t); i < n; i++)
     {
         if (t[i] >= 'A' && t[i] <= 'Z')
         {
@@ -68,7 +68,7 @@ int count_letters(string t)  //counter for the amount of letters
 
     }
 
-    return(L);
+    return (L);
 }
 
 int count_words(string t) //counter for the number of words, **assuming sentences don't start or end with spaces, and there is only one space between words and sentences.
@@ -88,7 +88,7 @@ int count_words(string t) //counter for the number of words, **assuming sentence
 
     }
 
-    return(W+1); //adds 1 to counter to count the last word (no space after this word)
+    return (W + 1); //adds 1 to counter to count the last word (no space after this word)
 }
 
 
@@ -98,7 +98,7 @@ int count_sentences(string t)
 
     for (int i = 0, n = strlen(t); i < n; i++)
     {
-        if(t[i] == '.' || t[i] == '!' || t[i] == '?')
+        if (t[i] == '.' || t[i] == '!' || t[i] == '?')
         {
             S++;  //adds to counter if a period, exclamation point, or questions mark is encountered(signalling the end of sentence)
         }
@@ -109,5 +109,5 @@ int count_sentences(string t)
 
     }
 
-    return(S);
+    return (S);
 }
