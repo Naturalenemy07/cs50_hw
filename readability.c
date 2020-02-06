@@ -92,7 +92,7 @@ int count_words(string t) //counter for the number of words, **assuming sentence
 }
 
 
-int count_sentences(string t)
+int count_sentences(string t) // function that counts the number of sentences ending in period, exclamation point, or question mark-assumes no words have a period in it (eg: Washington D.C.)
 {
     int S = 0;
 
