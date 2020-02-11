@@ -9,7 +9,7 @@
 
 int main(void)
 {
-    string text = get_string("Enter text: ");
+    string text = get_string("Enter text: "); // this is to test whether indivudual characters in a string can be printed
     for (int i = 0, n = strlen(text); i < n; i++)
     {
         printf("%c\n", text[i]);
@@ -17,3 +17,5 @@ int main(void)
     return(0);
 
 }
+
+// Now that individual strings can be accessed, I need to figure out how to take an input and set each letter in the alphabet to the key in successive order. 
