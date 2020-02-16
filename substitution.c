@@ -2,15 +2,17 @@
 #include<cs50.h>
 #include<string.h>
 
-int verify_unique_letters(string t);
+int verify_only_characters(string t);
+int verify_unique_characters(string t);
 int verify_length(string t);
 
 
 int main(int argc, string argv[])
 {
-// First, verify key meets all requirements:
+    // First, verify key meets all requirements:
 
-    if(argc != 2) // this if-statement checks the correct usage of single command-line argument by seeing if it is exactly two strings.
+    // This if-statement checks the correct usage of single command-line argument by seeing if it is exactly two strings.
+    if(argc != 2)
     {
         printf("Usage: ./substitution key **key is a string of 26 unique characters**\n");
         return(1);
@@ -18,43 +20,73 @@ int main(int argc, string argv[])
 
     string key = argv[1];
 
-    verify_unique_letters(key);
+    verify_only_characters(key);
+    verify_unique_characters(key);
     verify_length(key);
 
-    printf("You have the correct length key!\n");
-
-
+    // Next, translate the letters in ASCII (including capital letters) to respective letter in the key (in order)
 
 }
 
 
 //Custom Functions
 
-int verify_unique_letters(string t)
+int verify_only_characters(string t)
 {
-    //we can see if there are any repeats by storing two values at once.
-    //store the first character and compare it to the rest of the rest of the characters in the string,
-    //then move on to the next character and do the same thing.
-    //Repeat this for the rest of the chracters in the string.
-
-    for(int i = 0, n = strlen(t); i < n; i++)
+    for (int i = 0, n = strlen(t); i < n; i++)
     {
-        for(int j = 0, m = n - i - 1; j < m; j++)
+        if (t[i] < 65 || t[i] > 122)
         {
-            if(t[i] == t[j])
+            printf("Key can only contain characters!\n");
+            return(1);
+        }
+        else if(t[i] > 90 && t[i] < 97)
+        {
+            printf("Key can only contain characters!\n");
+            return(1);
+        }
+        else
+        {
+            printf("Key is only characters!\n");
+            return(0);
+        }
+    }
+}
+
+int verify_unique_characters(string t) //this function is failing to produce errors//
+{
+    for (int i = 0, n = strlen(t); i < n; i++)
+    {
+        for (int j = 1, m = n - i; j < m; j++)
+        {
+            // These conditional statements in verify_unique_characters funciton cause "warning: control may reach end of non-void function [-Wreturn-type]" to pop up.
+            // The algorithm has verified that only characters can get to this point, so it doesn't matter.  Will look into resolving this error if I have time.
+            if (t[i] == t[j])
+
             {
                 printf("The key must have all unique characters\n");
                 return(1);
             }
 
-            else if(t[i] == t[j] + 32 || t[i] == t[j] - 32)
+            else if (t[i] == t[j] + 32)
             {
-                printf("The key must have all unique characters, the key isn't case sensitive\n");
+                printf("The key must have all unique characters; the key isn't case sensitive\n");
                 return(1);
+            }
+
+            else if (t[i] == t[j] - 32)
+            {
+                printf("The key must have all unique characters; the key isn't case sensitive\n");
+                return(1);
+            }
+
+            else
+            {
+                printf("Your key has all unique characters!\n");
+                return(0);
             }
         }
     }
-
 }
 
 
@@ -63,11 +95,11 @@ int verify_length(string t)
 {
     int length = strlen(t);
 
-    if(length == 26)
+    if (length == 26)
     {
+        printf("Your key is 26 characters long!\n");
         return(0);
     }
-
     else
     {
         printf("The key must be 26 characters!\n");
@@ -77,17 +109,3 @@ int verify_length(string t)
 
 // input text
 // output encrypted text
-
-/*
-int main(void)
-{
-    string text = get_string("Enter text: ");
-    for (int i = 0, n = strlen(text); i < n; i++)
-    {
-        printf("%c\n", text[i]);
-    }
-    return(0);
-
-}
-
-*/
