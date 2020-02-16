@@ -21,7 +21,8 @@ int main(int argc, string argv[])
     string key = argv[1];
 
     verify_only_characters(key);
-    verify_unique_characters(key);
+    verify_unique_characters(key); //this function is currently failing to produce errors!
+    printf("verify_unique_characters(key) is failing to produce errors!")
     verify_length(key);
 
     // Next, translate the letters in ASCII (including capital letters) to respective letter in the key (in order)
@@ -59,8 +60,10 @@ int verify_unique_characters(string t) //this function is failing to produce err
     {
         for (int j = 1, m = n - i; j < m; j++)
         {
-            // These conditional statements in verify_unique_characters funciton cause "warning: control may reach end of non-void function [-Wreturn-type]" to pop up.
-            // The algorithm has verified that only characters can get to this point, so it doesn't matter.  Will look into resolving this error if I have time.
+            // These conditional statements in verify_unique_characters funciton cause "warning: control may reach end of non-void 
+            //function [-Wreturn-type]" to pop up. The algorithm has verified that only characters can get to this point, 
+            //so it doesn't matter.  Will look into resolving this error if I have time.
+            
             if (t[i] == t[j])
 
             {
