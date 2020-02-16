@@ -21,8 +21,7 @@ int main(int argc, string argv[])
     string key = argv[1];
 
     verify_only_characters(key);
-    verify_unique_characters(key); //this function is currently failing to produce errors!
-    printf("verify_unique_characters(key) is failing to produce errors!")
+    verify_unique_characters(key);
     verify_length(key);
 
     // Next, translate the letters in ASCII (including capital letters) to respective letter in the key (in order)
@@ -54,41 +53,43 @@ int verify_only_characters(string t)
     }
 }
 
-int verify_unique_characters(string t) //this function is failing to produce errors//
+int verify_unique_characters(string t)
 {
+    int k = 0;
+
     for (int i = 0, n = strlen(t); i < n; i++)
     {
-        for (int j = 1, m = n - i; j < m; j++)
+        for (int j = i + 1; j <= n; j++)
         {
-            // These conditional statements in verify_unique_characters funciton cause "warning: control may reach end of non-void 
-            //function [-Wreturn-type]" to pop up. The algorithm has verified that only characters can get to this point, 
-            //so it doesn't matter.  Will look into resolving this error if I have time.
-            
+            // These conditional statements in verify_unique_characters funciton cause "warning: control may reach end of non-void function [-Wreturn-type]" to pop up.
+            // The algorithm has verified that only characters can get to this point, so it doesn't matter.  Will look into resolving this error if I have time.
             if (t[i] == t[j])
 
             {
-                printf("The key must have all unique characters\n");
-                return(1);
+                k++;
             }
 
-            else if (t[i] == t[j] + 32)
+            else if (t[i] == t[j]+32 || t[i] == t[j]-32)
             {
-                printf("The key must have all unique characters; the key isn't case sensitive\n");
-                return(1);
-            }
-
-            else if (t[i] == t[j] - 32)
-            {
-                printf("The key must have all unique characters; the key isn't case sensitive\n");
-                return(1);
+                k++;
             }
 
             else
             {
-                printf("Your key has all unique characters!\n");
-                return(0);
+                k = k + 0;
             }
         }
+    }
+
+    if(k > 0)
+    {
+        printf("Your key needs to be 26 UNIQUE characters!\n");
+        return(1);
+    }
+    else
+    {
+        printf("Your key contains unique characters!\n");
+        return(0);
     }
 }
 
