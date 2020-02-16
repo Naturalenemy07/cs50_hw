@@ -5,7 +5,7 @@
 int verify_only_characters(string t);
 int verify_unique_characters(string t);
 int verify_length(string t);
-
+string encrypt_text(string t);
 
 int main(int argc, string argv[])
 {
@@ -24,7 +24,14 @@ int main(int argc, string argv[])
     verify_unique_characters(key);
     verify_length(key);
 
-    // Next, translate the letters in ASCII (including capital letters) to respective letter in the key (in order)
+    // Next, take user input as a string.
+
+    string plain_text = get_string("plaintext: \n");
+
+    // Next, put plain text through encryption algorithm and print ciphertext
+
+    string cipher_text = encrypt_text(plain_text);
+
 
 }
 
@@ -53,7 +60,7 @@ int verify_only_characters(string t)
     }
 }
 
-int verify_unique_characters(string t)
+int verify_unique_characters(string t) //this function is failing to produce errors//
 {
     int k = 0;
 
@@ -111,5 +118,7 @@ int verify_length(string t)
     }
 }
 
-// input text
-// output encrypted text
+string encrypt_text(string t);
+{
+
+}
