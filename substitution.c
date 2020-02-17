@@ -2,6 +2,7 @@
 #include<cs50.h>
 #include<string.h>
 
+//These are custom functions that will be used in the int main() function
 int verify_only_characters(string t);
 int verify_unique_characters(string t);
 int verify_length(string t);
@@ -9,7 +10,7 @@ string encrypt_text(string t);
 
 int main(int argc, string argv[])
 {
-    // First, verify key meets all requirements:
+    // FIRST, VERIFY COMMAND LINE ARGUMENT IS CORRECT (ONLY TWO INPUTS), THEN VERIFY KEY MEETS REQUIREMENTS
 
     // This if-statement checks the correct usage of single command-line argument by seeing if it is exactly two strings.
     if(argc != 2)
@@ -17,26 +18,26 @@ int main(int argc, string argv[])
         printf("Usage: ./substitution key **key is a string of 26 unique characters**\n");
         return(1);
     }
-
+    
+    //set the key to be the second argument in command line
     string key = argv[1];
-
+    
+    //Verification functions for the key
     verify_only_characters(key);
     verify_unique_characters(key);
     verify_length(key);
 
     // Next, take user input as a string.
-
     string plain_text = get_string("plaintext: \n");
 
     // Next, put plain text through encryption algorithm and print ciphertext
-
     string cipher_text = encrypt_text(plain_text);
 
 
 }
 
 
-//Custom Functions
+//CUSTOM FUNCTIONS
 
 int verify_only_characters(string t)
 {
