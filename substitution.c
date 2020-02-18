@@ -2,15 +2,14 @@
 #include<cs50.h>
 #include<string.h>
 
-//These are custom functions that will be used in the int main() function
 int verify_only_characters(string t);
 int verify_unique_characters(string t);
 int verify_length(string t);
-string encrypt_text(string t);
+int encrypt_text[string txt, string ky]; //getting an error on this line...it is expecting a string here?
 
 int main(int argc, string argv[])
 {
-    // FIRST, VERIFY COMMAND LINE ARGUMENT IS CORRECT (ONLY TWO INPUTS), THEN VERIFY KEY MEETS REQUIREMENTS
+    // First, verify key meets all requirements:
 
     // This if-statement checks the correct usage of single command-line argument by seeing if it is exactly two strings.
     if(argc != 2)
@@ -18,26 +17,26 @@ int main(int argc, string argv[])
         printf("Usage: ./substitution key **key is a string of 26 unique characters**\n");
         return(1);
     }
-    
-    //set the key to be the second argument in command line
+
     string key = argv[1];
-    
-    //Verification functions for the key
+
     verify_only_characters(key);
     verify_unique_characters(key);
     verify_length(key);
 
     // Next, take user input as a string.
+
     string plain_text = get_string("plaintext: \n");
 
     // Next, put plain text through encryption algorithm and print ciphertext
-    string cipher_text = encrypt_text(plain_text);
+
+    string cipher_text = encrypt_text[plain_text, key];
 
 
 }
 
 
-//CUSTOM FUNCTIONS
+//Custom Functions
 
 int verify_only_characters(string t)
 {
@@ -119,7 +118,45 @@ int verify_length(string t)
     }
 }
 
-string encrypt_text(string t);
+int encrypt_text[string txt, string ky]
 {
 
+    int cipher_code[strlen(txt)];
+
+    for (i = 0, n = strlen(txt); i < n; i++)
+    {
+        if (txt[i] > 96 && txt[i] < 123)
+        {
+            cipher_code[i] = ky[txt[i] - 97];
+        }
+
+        else if (txt[i] > 64 && txt[i] < 91)
+        {
+            cipher_code[i] = ky[txt[i] - 65];
+        }
+        
+        else
+        {
+            cipher_code[i] = txt[i];
+        }
+    }
 }
+
+// this is some code used to figure it out 
+/*
+{
+    string text = "hello, world";
+    int ciphertext[strlen(text)];
+
+    string key =   "VCHPRZGJNTLSKFBDQWAXEUYMOI"; //this is a key of 26 unique characters
+
+    for(int i = 0, n = strlen(text); i < n; i++)
+    {
+        ciphertext[i] = key[text[i]-97];
+        printf("%c",ciphertext[i]);
+    }
+
+    printf("\n");
+}
+
+*/
