@@ -5,7 +5,8 @@
 int verify_only_characters(string t);
 int verify_unique_characters(string t);
 int verify_length(string t);
-int encrypt_text[string txt, string ky]; //getting an error on this line...it is expecting a string here?
+int force_lower_case_key[string key];
+int encrypt_text[string txt, string kyl];
 
 int main(int argc, string argv[])
 {
@@ -24,13 +25,26 @@ int main(int argc, string argv[])
     verify_unique_characters(key);
     verify_length(key);
 
+    //Now that the key is verified, I will force all characters in the key to be lower case
+
+    force_lower_case_key(key);
+
     // Next, take user input as a string.
 
     string plain_text = get_string("plaintext: \n");
 
     // Next, put plain text through encryption algorithm and print ciphertext
 
-    string cipher_text = encrypt_text[plain_text, key];
+    int cipher_text = encrypt_text[plain_text, keyl];
+
+    printf("ciphertext: ")
+
+    for (int i = 0, n = strlen(plain_text); i < n; i++)
+    {
+        printf("%c", cipher_text[i]);
+    }
+
+    printf("\n");
 
 
 }
@@ -60,7 +74,7 @@ int verify_only_characters(string t)
     }
 }
 
-int verify_unique_characters(string t) //this function is failing to produce errors//
+int verify_unique_characters(string t)
 {
     int k = 0;
 
@@ -118,45 +132,45 @@ int verify_length(string t)
     }
 }
 
-int encrypt_text[string txt, string ky]
+
+int force_lower_case_key[string key]
 {
+    int keyl[strlen(key)];
 
-    int cipher_code[strlen(txt)];
+    for (int i = 0, m = strlen(key); i < m; i++)
+    {
+        keyl[i] = tolower(key[i]);
+    }
 
-    for (i = 0, n = strlen(txt); i < n; i++)
+    return(key1);
+}
+
+int encrypt_text[string txt, string kyl]
+{
+    int n = strlen(txt); // since I am using this value multiple times, I will define this variable now.
+
+    int cipher_code[n];
+
+    for (int i = 0; i < n; i++)
     {
         if (txt[i] > 96 && txt[i] < 123)
         {
-            cipher_code[i] = ky[txt[i] - 97];
+            cipher_code[i] = kyl[txt[i] - 97];
         }
 
         else if (txt[i] > 64 && txt[i] < 91)
         {
-            cipher_code[i] = ky[txt[i] - 65];
+            cipher_code[i] = kyl[txt[i] - 65] + 97;
         }
-        
+
         else
         {
             cipher_code[i] = txt[i];
         }
-    }
-}
 
-// this is some code used to figure it out 
-/*
-{
-    string text = "hello, world";
-    int ciphertext[strlen(text)];
+        char cipher_text[strlen(txt)[i]] = cipher_code[i];
 
-    string key =   "VCHPRZGJNTLSKFBDQWAXEUYMOI"; //this is a key of 26 unique characters
-
-    for(int i = 0, n = strlen(text); i < n; i++)
-    {
-        ciphertext[i] = key[text[i]-97];
-        printf("%c",ciphertext[i]);
     }
 
-    printf("\n");
+    return(cipher_code);
 }
-
-*/
