@@ -22,7 +22,7 @@ int main(int argc, string argv[])
     string key = argv[1];
 
     verify_only_characters(key);
-    verify_unique_characters(key);
+    verify_unique_characters(key); 
     verify_length(key);
 
     //Now that the key is verified, I will force all characters in the key to be lower case
