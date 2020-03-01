@@ -12,7 +12,7 @@ int main(int argc, string argv[])
     if (argc != 2)
     {
         printf("Use Command Line argument: ./caesar key **key is a number only\n");
-        return(1);
+        return (1);
     }
 
     string key = argv[1]; //set the key as an integer, which is the second input of the command line argument
@@ -22,17 +22,20 @@ int main(int argc, string argv[])
         if (key[i] < 48 || key[i] > 57)
         {
             printf("Key should be a number!\n");
-            return(1);
+            return (1);
         }
     }
 
     int key_int = atoi(key); // use of the atoi() function converts a string into an integer
 
-    //printf("%i\n", key_int); just to make sure that the key has now been transformed into an integer
+    if (key_int > 26)
+    {
+        key_int = key_int % 26; //we want the character to wrap around like ... X Y Z -> A B C ... so if the key is greater than
+    }
 
     string plaintext = get_string("plaintext: ");
 
-    int cipher_text[strlen(plaintext)]; //cipher_text is an array of integers synominous to the plaintext
+    int cipher_text[strlen(plaintext)];//cipher_text is an array of integers synominous to the plaintext
 
     int max_cap = 90;//set min and max values of caps and lower case
     int min_cap = 65;
