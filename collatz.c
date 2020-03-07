@@ -6,6 +6,7 @@ int collatz(int n, int i);
 
 int main(void)
 {
+    int i = 0;
     int n = get_int("n: "); //gets input for what n should
     int steps = collatz(n, i);
     printf("Steps: %i\n", steps);
@@ -21,11 +22,13 @@ int collatz(int n, int i)
 
     else if (n % 2 == 1)
     {
-        return 1 + collatz(3 * n + 1, i);
+        i++;
+        return collatz(3 * n + 1, i);
     }
 
     else
     {
-        return 1 + collatz(n / 2, i);
+        i++;
+        return collatz(n / 2, i);
     }
 }
