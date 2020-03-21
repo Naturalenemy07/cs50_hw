@@ -85,6 +85,22 @@ int main(int argc, string argv[])
         printf("\n");
     }
 
+    /////////////////////////////////////////////  original between these two forward slant lines
+/*  This code was used to check my preferences array
+
+    for (int i = 0; i < voter_count; i++)
+    {
+        for (int j = 0; j < candidate_count; j++)
+        {
+            printf("%i ", preferences[i][j]);
+        }
+
+        printf("\n");
+
+    }
+*/
+    //////////////////////////////////////////////
+
     // Keep holding runoffs until winner exists
     while (true)
     {
@@ -132,33 +148,12 @@ int main(int argc, string argv[])
 // Record preference if vote is valid
 bool vote(int voter, int rank, string name)
 {
-    //voter: which voter
-    //rank: the rank of the candidate in name
-    //name: the name of candidate voted for
-
-    //what should it do?
-    //look for a candidate called name
-    //if candidate name is foun, update the 2d array of preferences so that that candidate is the first preference
-    //return true
-
-    //if no candidate is found, return false
-
-    //VOTE JUST FILLS OUT THE preferences[MAX_VOTERS][MAX_CANDIDATES] MATRIX
-
-    // vote(i, j, name) j cycles through until all candidates are reached, then the next voter
-
     for (int i = 0; i < candidate_count; i++)
     {
         if(strcmp(name, candidates[i].name) == 0)
         {
-            printf("%s \n",candidates[i].name);
-
+            preferences[voter][rank] = i; //add this candidate's location number to the preferences matrix
             return true;
-        }
-
-        else
-        {
-            printf("# ");
         }
     }
 
