@@ -85,8 +85,8 @@ int main(int argc, string argv[])
         printf("\n");
     }
 
-    /////////////////////////////////////////////  original between these two forward slant lines
-/*  This code was used to check my preferences array
+    /////////////////////////////////////////////*  original between these two forward slant lines
+    This code was used to check my preferences array
 
     for (int i = 0; i < voter_count; i++)
     {
@@ -98,8 +98,8 @@ int main(int argc, string argv[])
         printf("\n");
 
     }
-*/
-    //////////////////////////////////////////////
+
+    *//////////////////////////////////////////////
 
     // Keep holding runoffs until winner exists
     while (true)
