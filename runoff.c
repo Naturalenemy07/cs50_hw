@@ -30,7 +30,7 @@ int candidate_count;
 // Function prototypes
 bool vote(int voter, int rank, string name);
 void tabulate(void);
-void eliminated_candidate(void);
+void eliminated_candidate(int voter, int preference);
 bool print_winner(void);
 int find_min(void);
 bool is_tie(int min);
@@ -175,9 +175,9 @@ void tabulate(void)
                 candidates[j].votes++;
                 //printf("%s: %i\n", candidates[j].name, candidates[j].votes); used to check my vote counter
             }
-            else if (candidates[j].eliminated == true) //if the candidate is eliminated
+            else if (candidates[j].eliminated == true && j == preferences[i][p]) //if the candidate is eliminated
             {
-               eliminated_candidate();
+               eliminated_candidate(i, p);
             }
         }
     }
@@ -185,9 +185,20 @@ void tabulate(void)
 }
 
 // Used as a recursive function to move down the preferences of a voters choices if candidate/s is/are eliminated
-void eliminated_candidate(void)
+void eliminated_candidate(int voter, int preference)
 {
-
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (candidates[i + 1].eliminated == false && i + 1 == preferences[voter][preference + 1])
+        {
+            candidates[i + 1].votes++;
+        }
+        else
+        {
+            eliminated_candidate(voter, preference + 1);
+        }
+    }
+    return;
 }
 
 // Print the winner of the election, if there is one
