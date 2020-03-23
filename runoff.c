@@ -30,6 +30,7 @@ int candidate_count;
 // Function prototypes
 bool vote(int voter, int rank, string name);
 void tabulate(void);
+void eliminated_candidate(void);
 bool print_winner(void);
 int find_min(void);
 bool is_tie(int min);
@@ -176,18 +177,17 @@ void tabulate(void)
             }
             else if (candidates[j].eliminated == true) //if the candidate is eliminated
             {
-                for (int k = 1; k <= candidate_count; k++)
-                {
-                    if (candidates[k].eliminated == false && k == preferences[i][k]) //will most likely need to change this, why is it so complicated, can I do a recursive function?
-                    {
-                        candidates[k].votes++;
-                        printf("%s: %i", candidates[k].name, candidates[k].votes);
-                    }
-                }
+               eliminated_candidate();
             }
         }
     }
     return;
+}
+
+// Used as a recursive function to move down the preferences of a voters choices if candidate/s is/are eliminated
+void eliminated_candidate(void)
+{
+
 }
 
 // Print the winner of the election, if there is one
