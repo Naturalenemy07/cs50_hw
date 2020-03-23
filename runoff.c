@@ -30,6 +30,7 @@ int candidate_count;
 // Function prototypes
 bool vote(int voter, int rank, string name);
 void tabulate(void);
+void eliminated_candidate(int voter, int preference);
 bool print_winner(void);
 int find_min(void);
 bool is_tie(int min);
@@ -163,28 +164,39 @@ bool vote(int voter, int rank, string name)
 // Tabulate votes for non-eliminated candidates
 void tabulate(void)
 {
-    int p = 0; //this is the first preference, will change if a candidate is eliminated.
+    int pref = 0; //this is the first preference, will change if a candidate is eliminated.
 
     for (int i = 0; i < voter_count; i++)
     {
         for (int j = 0; j < candidate_count; j++)
         {
-            if (candidates[j].eliminated == false && j == preferences[i][p])
+            if (candidates[j].eliminated == false && j == preferences[i][pref])
             {
                 candidates[j].votes++;
-                //printf("%s: %i\n", candidates[j].name, candidates[j].votes); used to check my vote counter
+                //printf("%s: %i\n", candidates[j].name, candidates[j].votes); //used to check my vote counter //testingg////
             }
-            else if (candidates[j].eliminated == true) //if the candidate is eliminated
+            else if (candidates[j].eliminated == true && j == preferences[i][pref]) //if the candidate is eliminated
             {
-                for (int k = 1; k <= candidate_count; k++)
-                {
-                    if (candidates[k].eliminated == false && k == preferences[i][k]) //will most likely need to change this, why is it so complicated, can I do a recursive function?
-                    {
-                        candidates[k].votes++;
-                        printf("%s: %i", candidates[k].name, candidates[k].votes);
-                    }
-                }
+               eliminated_candidate(i, pref);
             }
+        }
+    }
+    return;
+}
+
+// Used as a recursive function to move down the preferences of a voters choices if candidate/s is/are eliminated
+void eliminated_candidate(int voter, int preference)
+{
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (candidates[i + 1].eliminated == false && i + 1 == preferences[voter][preference + 1])
+        {
+            candidates[i + 1].votes++;
+            printf("%s: %i", candidates[i + 1].name, candidates[i + 1].votes); ////////testing my recursive function////
+        }
+        else
+        {
+            eliminated_candidate(voter, preference + 1);
         }
     }
     return;
@@ -193,7 +205,14 @@ void tabulate(void)
 // Print the winner of the election, if there is one
 bool print_winner(void)
 {
-    // TODO
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (candidates[i].votes > voter_count / 2)
+        {
+            printf("%s\n", candidates[i].name);
+            return true;
+        }
+    }
     return false;
 }
 
