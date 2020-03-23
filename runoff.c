@@ -86,8 +86,7 @@ int main(int argc, string argv[])
     }
 
     /////////////////////////////////////////////  original between these two forward slant lines
-    /*
-    This code was used to check my preferences array
+/*  This code was used to check my preferences array
 
     for (int i = 0; i < voter_count; i++)
     {
@@ -99,7 +98,7 @@ int main(int argc, string argv[])
         printf("\n");
 
     }
-    */
+*/
     //////////////////////////////////////////////
 
     // Keep holding runoffs until winner exists
@@ -164,7 +163,30 @@ bool vote(int voter, int rank, string name)
 // Tabulate votes for non-eliminated candidates
 void tabulate(void)
 {
-    // TODO
+    int p = 0; //this is the first preference, will change if a candidate is eliminated.
+
+    for (int i = 0; i < voter_count; i++)
+    {
+        for (int j = 0; j < candidate_count; j++)
+        {
+            if (candidates[j].eliminated == false && j == preferences[i][p])
+            {
+                candidates[j].votes++;
+                //printf("%s: %i\n", candidates[j].name, candidates[j].votes); used to check my vote counter
+            }
+            else if (candidates[j].eliminated == true) //if the candidate is eliminated
+            {
+                for (int k = 1; k <= candidate_count; k++)
+                {
+                    if (candidates[k].eliminated == false && k == preferences[i][k]) //will most likely need to change this, why is it so complicated, can I do a recursive function?
+                    {
+                        candidates[k].votes++;
+                        printf("%s: %i", candidates[k].name, candidates[k].votes);
+                    }
+                }
+            }
+        }
+    }
     return;
 }
 
