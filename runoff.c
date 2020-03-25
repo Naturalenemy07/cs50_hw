@@ -23,6 +23,7 @@ candidate;
 // Array of candidates
 candidate candidates[MAX_CANDIDATES];
 
+
 // Numbers of voters and candidates
 int voter_count;
 int candidate_count;
