@@ -220,6 +220,28 @@ bool print_winner(void)
 int find_min(void)
 {
     // need to sort the candidates and find the one with the lowest number of voters
+    //perform an insertion sort to bring the lowest value to the beginning of the list
+    /////////////////////////////////////////////////////////////////////////////////
+    //Edit this code to match runoff.c, just copied this insertion sort from my other program
+    for (int j = 1; j < max_numb; j++)
+    {
+        int k = max_numb;
+
+        while (k > 0)
+        {
+            int l = max_numb - k;
+
+            if (numb_array[j] < numb_array[l])
+            {
+                /////SWAP///
+                int i = numb_array[j];
+                numb_array[j] = numb_array[l];
+                numb_array[l] = i;
+            }
+            k--;
+        }
+    }
+
     return 0;
 }
 
