@@ -23,7 +23,6 @@ candidate;
 // Array of candidates
 candidate candidates[MAX_CANDIDATES];
 
-
 // Numbers of voters and candidates
 int voter_count;
 int candidate_count;
@@ -224,26 +223,45 @@ int find_min(void)
     //perform an insertion sort to bring the lowest value to the beginning of the list
     /////////////////////////////////////////////////////////////////////////////////
     //Edit this code to match runoff.c, just copied this insertion sort from my other program
-    for (int j = 1; j < max_numb; j++)
+    for (int j = 1; j < candidate_count; j++)
     {
-        int k = max_numb;
+        int k = candidate_count;
 
         while (k > 0)
         {
-            int l = max_numb - k;
+            int l = candidate_count - k;
 
-            if (numb_array[j] < numb_array[l])
+            if (candidates[j].votes < candidates[l].votes)
             {
-                /////SWAP///
-                int i = numb_array[j];
-                numb_array[j] = numb_array[l];
-                numb_array[l] = i;
+                /////SWAP///------seems like a weird way to swap inside a structure--is there a better way?
+                int i = candidates[j].votes;
+                candidates[j].votes = candidates[l].votes;
+                candidates[l].votes = i;
+
+                string nm = candidates[j].name;
+                candidates[j].name = candidates[l].name;
+                candidates[l].name = nm;
+
+                bool elim = candidates[j].eliminated;
+                candidates[j].eliminated = candidates[l].eliminated;
+                candidates[l].eliminated = elim;
             }
             k--;
         }
     }
 
+//---------------Printing to see if sorted-----------------------------------//
+/*
+    printf("\n");
+     for (int i = 0; i < candidate_count; i++)
+    {
+        printf("%s: %i votes\n", candidates[i].name, candidates[i].votes);
+    }
+
+    printf("\n");
+
     return 0;
+    */
 }
 
 // Return true if the election is tied between all candidates, false otherwise
