@@ -233,7 +233,7 @@ int find_min(void)
 
             if (candidates[j].votes < candidates[l].votes)
             {
-                /////SWAP///------seems like a weird way to swap inside a structure--is there a better way?
+                /////SWAP///------seems like a weird way to swap inside a structure--is there a better way?  i have to individually swap each part of the structure
                 int i = candidates[j].votes;
                 candidates[j].votes = candidates[l].votes;
                 candidates[l].votes = i;
@@ -249,6 +249,18 @@ int find_min(void)
             k--;
         }
     }
+
+    //now I need to return the lowest number of votes of the candidate that is still in the election, the array is sorted so the first candidate that is still in the race has the min votes.
+
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (candidates[i].eliminated == false)
+        {
+            printf("%i", candidates[i].votes);
+        }
+    }
+
+return 1; //return unsuccessful operation if it reaches this point in not finding a min
 
 //---------------Printing to see if sorted-----------------------------------//
 /*
@@ -267,8 +279,29 @@ int find_min(void)
 // Return true if the election is tied between all candidates, false otherwise
 bool is_tie(int min)
 {
-    // TODO
-    return false;
+    int counter = 0;
+
+    for (int i = 0; i < candidate_count; i++)
+    {
+
+        if (candidates[i].eliminated == false  && candidates[i].votes == min)
+        {
+            counter = counter + 0;
+        }
+        else if (candidates[i].eliminated == false && candidates[i].votes > min)
+        {
+            counter++;
+        }
+    }
+
+    if (counter == 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 // Eliminate the candidate (or candidiates) in last place
