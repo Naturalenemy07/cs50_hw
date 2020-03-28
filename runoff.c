@@ -173,11 +173,11 @@ void tabulate(void)
             if (candidates[j].eliminated == false && j == preferences[i][pref])
             {
                 candidates[j].votes++;
-                printf("%s: %i\n", candidates[j].name, candidates[j].votes); //used to check my vote counter //testingg////
+                //printf("%s: %i\n", candidates[j].name, candidates[j].votes); //used to check my vote counter //testingg////
             }
             else if (candidates[j].eliminated == true && j == preferences[i][pref]) //if the candidate is eliminated
             {
-               eliminated_candidate(i, pref);
+                eliminated_candidate(i, pref);
             }
         }
     }
@@ -192,7 +192,7 @@ void eliminated_candidate(int voter, int preference)
         if (candidates[i + 1].eliminated == false && i + 1 == preferences[voter][preference + 1])
         {
             candidates[i + 1].votes++;
-            printf("%s: %i", candidates[i + 1].name, candidates[i + 1].votes); ////////testing my recursive function////
+            //printf("%s: %i", candidates[i + 1].name, candidates[i + 1].votes); ////////testing my recursive function////
         }
         else
         {
@@ -209,7 +209,7 @@ bool print_winner(void)
     {
         if (candidates[i].votes > voter_count / 2)
         {
-            printf("%s\n", candidates[i].name);
+            //printf("%s\n", candidates[i].name);
             return true;
         }
     }
@@ -256,7 +256,7 @@ int find_min(void)
     {
         if (candidates[i].eliminated == false)
         {
-            printf("%i", candidates[i].votes);
+            return candidates[i].votes;
         }
     }
 
@@ -307,6 +307,12 @@ bool is_tie(int min)
 // Eliminate the candidate (or candidiates) in last place
 void eliminate(int min)
 {
-    // TODO
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (candidates[i].votes == min)
+        {
+            candidates[i].eliminated = true;
+        }
+    }
     return;
 }
