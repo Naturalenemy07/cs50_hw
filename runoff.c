@@ -195,6 +195,11 @@ void eliminated_candidate(int voter, int preference)
     }
     else
     {
+        printf("%s: %d\n", candidates[preference + 1].name, candidates[preference + 1].votes);
+
+        printf("%s: %d\n", candidates[preference].name, candidates[preference].eliminated);
+        printf("Preference + 1: %i\n", preference + 1);
+        printf("Preference array: %i\n", preferences[voter][preference + 1]);
         preference++;
         eliminated_candidate(voter, preference);
     }
@@ -278,3 +283,4 @@ void eliminate(int min)
     }
     return;
 }
+
