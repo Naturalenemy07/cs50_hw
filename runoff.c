@@ -30,7 +30,6 @@ int candidate_count;
 // Function prototypes
 bool vote(int voter, int rank, string name);
 void tabulate(void);
-void eliminated_candidate(int voter, int preference);
 bool print_winner(void);
 int find_min(void);
 bool is_tie(int min);
@@ -173,30 +172,22 @@ void tabulate(void)
             if (candidates[j].eliminated == false && j == preferences[i][pref])
             {
                 candidates[j].votes++;
-                //printf("%s: %i\n", candidates[j].name, candidates[j].votes); //used to check my vote counter //testingg////
+                printf("%s: %i\n", candidates[j].name, candidates[j].votes); //used to check my vote counter //testingg////
             }
             else if (candidates[j].eliminated == true && j == preferences[i][pref]) //if the candidate is eliminated
             {
-                eliminated_candidate(i, pref);
-            }
-        }
-    }
-    return;
-}
+                int k = 0;
 
-// Used as a recursive function to move down the preferences of a voters choices if candidate/s is/are eliminated
-void eliminated_candidate(int voter, int preference)
-{
-    for (int i = 0; i < candidate_count; i++)
-    {
-        if (candidates[i + 1].eliminated == false && i + 1 == preferences[voter][preference + 1])
-        {
-            candidates[i + 1].votes++;
-            //printf("%s: %i", candidates[i + 1].name, candidates[i + 1].votes); ////////testing my recursive function////
-        }
-        else
-        {
-            eliminated_candidate(voter, preference + 1);
+                while (candidates[k].eliminated == true)
+                {
+                    printf("%s: %i\n", candidates[k].name, candidates[k].votes);
+                    k++;
+                }
+
+                candidates[k].votes++;
+                printf("%s: %i\n", candidates[k].name, candidates[k].votes); //checking to see if it adds to the votes
+
+            }
         }
     }
     return;
@@ -209,71 +200,32 @@ bool print_winner(void)
     {
         if (candidates[i].votes > voter_count / 2)
         {
-            //printf("%s\n", candidates[i].name);
+            printf("%s\n", candidates[i].name);
             return true;
         }
     }
     return false;
 }
 
-// Return the minimum number of votes any remaining candidate has
-int find_min(void)
+// Return the minimum number of votes any remaining candidate has ????
+int find_min(void) // the sorting algorithm in find_min() may interfere with the tabulate algorithm
 {
-    // need to sort the candidates and find the one with the lowest number of voters
-    //perform an insertion sort to bring the lowest value to the beginning of the list
-    /////////////////////////////////////////////////////////////////////////////////
-    //Edit this code to match runoff.c, just copied this insertion sort from my other program
-    for (int j = 1; j < candidate_count; j++)
-    {
-        int k = candidate_count;
-
-        while (k > 0)
-        {
-            int l = candidate_count - k;
-
-            if (candidates[j].votes < candidates[l].votes)
-            {
-                /////SWAP///------seems like a weird way to swap inside a structure--is there a better way?  i have to individually swap each part of the structure
-                int i = candidates[j].votes;
-                candidates[j].votes = candidates[l].votes;
-                candidates[l].votes = i;
-
-                string nm = candidates[j].name;
-                candidates[j].name = candidates[l].name;
-                candidates[l].name = nm;
-
-                bool elim = candidates[j].eliminated;
-                candidates[j].eliminated = candidates[l].eliminated;
-                candidates[l].eliminated = elim;
-            }
-            k--;
-        }
-    }
-
-    //now I need to return the lowest number of votes of the candidate that is still in the election, the array is sorted so the first candidate that is still in the race has the min votes.
+    int min = MAX_VOTERS + 1;
 
     for (int i = 0; i < candidate_count; i++)
     {
         if (candidates[i].eliminated == false)
         {
-            return candidates[i].votes;
+            if (candidates[i].votes < min)
+            {
+                min = candidates[i].votes;
+                //printf("local min: %i\n", min);
+            }
         }
     }
 
-return 1; //return unsuccessful operation if it reaches this point in not finding a min
-
-//---------------Printing to see if sorted-----------------------------------//
-/*
-    printf("\n");
-     for (int i = 0; i < candidate_count; i++)
-    {
-        printf("%s: %i votes\n", candidates[i].name, candidates[i].votes);
-    }
-
-    printf("\n");
-
-    return 0;
-    */
+    //printf("global min: %i\n", min);
+    return min;
 }
 
 // Return true if the election is tied between all candidates, false otherwise
@@ -312,6 +264,7 @@ void eliminate(int min)
         if (candidates[i].votes == min)
         {
             candidates[i].eliminated = true;
+            //printf("%s\n", candidates[i].name);
         }
     }
     return;
