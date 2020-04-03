@@ -176,6 +176,8 @@ void tabulate(void)
             }
             else if (candidates[j].eliminated == true && j == preferences[i][pref]) //if the candidate is eliminated
             {
+                pref++;
+                /* still trouble shooting this section of tabulate()
                 int k = 0;
 
                 while (candidates[k].eliminated == true)
@@ -186,7 +188,8 @@ void tabulate(void)
 
                 candidates[k].votes++;
                 printf("%s: %i\n", candidates[k].name, candidates[k].votes); //checking to see if it adds to the votes
-
+                
+                */
             }
         }
     }
