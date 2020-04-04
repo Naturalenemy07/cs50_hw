@@ -85,8 +85,8 @@ int main(int argc, string argv[])
         printf("\n");
     }
 
-    /////////////////////////////////////////////  original between these two forward slant lines
-/*  This code was used to check my preferences array
+//// This code was used to check my preferences array///
+/*
 
     for (int i = 0; i < voter_count; i++)
     {
@@ -98,8 +98,7 @@ int main(int argc, string argv[])
         printf("\n");
 
     }
-*/
-    //////////////////////////////////////////////
+*///////////////////////////////////////////////////////
 
     // Keep holding runoffs until winner exists
     while (true)
@@ -162,39 +161,33 @@ bool vote(int voter, int rank, string name)
 
 // Tabulate votes for non-eliminated candidates
 void tabulate(void)
-{
-    int pref = 0; //this is the first preference, will change if a candidate is eliminated.
 
-    for (int i = 0; i < voter_count; i++)
+{
+
+    for (int i = 0; i < voter_count; i++) //cycle through voters
     {
-        for (int j = 0; j < candidate_count; j++)
+        int pref = 0; //need to set preference to 0 (most prefered candidate) unless that candidate is eliminated
+
+        for (int j = 0; j < candidate_count; j++) //within each vote, cycle through all the candidates
         {
-            if (candidates[j].eliminated == false && j == preferences[i][pref])
-            {
-                candidates[j].votes++;
-                printf("%s: %i\n", candidates[j].name, candidates[j].votes); //used to check my vote counter //testingg////
-            }
-            else if (candidates[j].eliminated == true && j == preferences[i][pref]) //if the candidate is eliminated
+            while (candidates[preferences[i][pref]].eliminated == true) //this will check if the voter at specified preference is eliminated, if so, it will move to the next preference
             {
                 pref++;
-                /* still trouble shooting this section of tabulate()
-                int k = 0;
+            }
 
-                while (candidates[k].eliminated == true)
-                {
-                    printf("%s: %i\n", candidates[k].name, candidates[k].votes);
-                    k++;
-                }
-
-                candidates[k].votes++;
-                printf("%s: %i\n", candidates[k].name, candidates[k].votes); //checking to see if it adds to the votes
-                
-                */
+            if (candidates[preferences[i][pref]].eliminated == false && j == preferences[i][pref]) //used to verify that the specified candidate, in relation to the preference is NOT eliminated and it uses the candidate counter to increase the vote if meets specifications
+            {
+                candidates[j].votes++;
+                printf("%s: %d\n", candidates[j].name, candidates[j].votes);
             }
         }
     }
+
+
     return;
 }
+
+
 
 // Print the winner of the election, if there is one
 bool print_winner(void)
@@ -211,7 +204,7 @@ bool print_winner(void)
 }
 
 // Return the minimum number of votes any remaining candidate has ????
-int find_min(void) // the sorting algorithm in find_min() may interfere with the tabulate algorithm
+int find_min(void)
 {
     int min = MAX_VOTERS + 1;
 
@@ -222,12 +215,12 @@ int find_min(void) // the sorting algorithm in find_min() may interfere with the
             if (candidates[i].votes < min)
             {
                 min = candidates[i].votes;
-                //printf("local min: %i\n", min);
+                //printf("local min: %i\n", min); used to check my algorithm
             }
         }
     }
 
-    //printf("global min: %i\n", min);
+    //printf("global min: %i\n", min); //used to check algorithm
     return min;
 }
 
@@ -267,7 +260,7 @@ void eliminate(int min)
         if (candidates[i].votes == min)
         {
             candidates[i].eliminated = true;
-            //printf("%s\n", candidates[i].name);
+            //printf("%s\n", candidates[i].name); used to check algorithm
         }
     }
     return;
