@@ -26,6 +26,31 @@ void grayscale(int height, int width, RGBTRIPLE image[height][width])
 // Reflect image horizontally
 void reflect(int height, int width, RGBTRIPLE image[height][width])
 {
+    int temp_R;
+    int temp_G;
+    int temp_B;
+
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width/2; j++)
+        {
+            //set the global variable pointers to the values held by the pixels
+            temp_R = image[i][j].rgbtRed;
+            temp_G = image[i][j].rgbtGreen;
+            temp_B = image[i][j].rgbtBlue;
+
+            //next set the pixels equal to the adjacent pixels on other side of the picture
+            image[i][j].rgbtRed = image[i][width - j -1].rgbtRed;
+            image[i][j].rgbtGreen = image[i][width - j - 1].rgbtGreen;
+            image[i][j].rgbtBlue = image[i][width - j - 1].rgbtBlue;
+
+            //reflect
+            image[i][width - j - 1].rgbtRed = temp_R;
+            image[i][width - j - 1].rgbtGreen = temp_G;
+            image[i][width - j - 1].rgbtBlue = temp_B;
+
+        }
+    }
     return;
 }
 
