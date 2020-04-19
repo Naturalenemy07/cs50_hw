@@ -58,7 +58,7 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 // Blur image
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
-    //set the new colors here = made three seperate arrays but maybe I can do a structure...
+    //set the new colors here; made three seperate arrays but maybe I can do a structure...
     int image_copy_R[height][width];
     int image_copy_G[height][width];
     int image_copy_B[height][width];
@@ -84,9 +84,9 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
                 else if(i == height-1 && j == 0)
                 {
-                    avg_R = round((image[i][j+1].rgbtRed + image[i-1][j+1].rgbtRed + image[i-1][j-1].rgbtRed)/3);
-                    avg_G = round((image[i][j+1].rgbtGreen + image[i-1][j+1].rgbtGreen + image[i-1][j-1].rgbtGreen)/3);
-                    avg_B = round((image[i][j+1].rgbtBlue + image[i-1][j+1].rgbtBlue + image[i-1][j-1].rgbtBlue)/3);
+                    avg_R = round((image[i][j+1].rgbtRed + image[i-1][j+1].rgbtRed + image[i-1][j].rgbtRed)/3);
+                    avg_G = round((image[i][j+1].rgbtGreen + image[i-1][j+1].rgbtGreen + image[i-1][j].rgbtGreen)/3);
+                    avg_B = round((image[i][j+1].rgbtBlue + image[i-1][j+1].rgbtBlue + image[i-1][j].rgbtBlue)/3);
                 }
 
                 else if (i == 0 && j == width-1)
@@ -131,9 +131,9 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
                 else
                 {
-                    avg_R = round((image[i][j+1].rgbtRed + image[i-1][j+1].rgbtRed + image[i][j-1].rgbtRed + image[i-1][j-1].rgbtRed + image[i-1][j].rgbtRed)/5);
-                    avg_G = round((image[i][j+1].rgbtGreen + image[i-1][j+1].rgbtGreen + image[i][j-1].rgbtGreen + image[i-1][j-1].rgbtGreen + image[i-1][j].rgbtGreen)/5);
-                    avg_B = round((image[i][j+1].rgbtBlue + image[i-1][j+1].rgbtBlue + image[i][j-1].rgbtBlue + image[i-1][j-1].rgbtBlue + image[i-1][j].rgbtBlue)/5);
+                    avg_R = round((image[i+1][j].rgbtRed + image[i+1][j-1].rgbtRed + image[i][j-1].rgbtRed + image[i-1][j-1].rgbtRed + image[i-1][j].rgbtRed)/5);
+                    avg_G = round((image[i+1][j].rgbtGreen + image[i+1][j-1].rgbtGreen + image[i][j-1].rgbtGreen + image[i-1][j-1].rgbtGreen + image[i-1][j].rgbtGreen)/5);
+                    avg_B = round((image[i+1][j].rgbtBlue + image[i+1][j-1].rgbtBlue + image[i][j-1].rgbtBlue + image[i-1][j-1].rgbtBlue + image[i-1][j].rgbtBlue)/5);
                 }
             }
 
@@ -154,7 +154,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
         }
     }
 
-    //not set the original image to the blurred colors
+    //set the original image to the blurred colors
 
     for (int k = 0; k < height; k++)
     {
