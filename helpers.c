@@ -182,7 +182,26 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
     int Gy_Green[8];
     int Gy_Blue[8];
     
+    //Sobel Algorithm
+    int n_red = sqrt(Gx_Red^2 + Gy_Red^2);
+    int n_green = sqrt(Gx_Green^2 + Gy_Green^2);
+    int n_blue = sqrt(Gx_Blue^2 + Gy_Blue^2);
     
+    //maximum value is 255...is there a better way to do this?
+    if (n_red > 255)
+    {
+        n_red = 255;
+    }
+    
+    if (n_green > 255)
+    {
+        n_green = 255;
+    }
+    
+    if (n_blue > 255)
+    {
+        n_blue = 255;
+    }
     
     return;
 }
