@@ -232,7 +232,13 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
 
                 else if(i == height-1 && j == 0)
                 {
+                    Gx_Red = image[i][j+1].rgbtRed * Rx + image[i-1][j+1].rgbtRed * LRx + image[i-1][j].rgbtRed * Lx;
+                    Gx_Green = image[i][j+1].rgbtGreen * Rx + image[i-1][j+1].rgbtGreen * LRx + image[i-1][j].rgbtGreen * Lx;
+                    Gx_Blue = image[i][j+1].rgbtBlue * Rx + image[i-1][j+1].rgbtBlue * LRx + image[i-1][j].rgbtBlue * Lx;
 
+                    Gy_Red = image[i][j+1].rgbtRed * Ry + image[i-1][j+1].rgbtRed * LRy + image[i-1][j].rgbtRed * Ly;
+                    Gy_Green = image[i][j+1].rgbtGreen * Ry + image[i-1][j+1].rgbtGreen * LRy + image[i-1][j].rgbtGreen * Ly;
+                    Gx_Blue = image[i][j+1].rgbtBlue * Ry + image[i-1][j+1].rgbtBlue * LRy + image[i-1][j].rgbtBlue * Ly;
                 }
 
                 else if (i == 0 && j == width-1)
