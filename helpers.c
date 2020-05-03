@@ -174,13 +174,15 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
     int Gx_Kernel[3][3] = {{-1, 0, 1},{-2, 0, 2},{-1, 0, 1}};
     int Gy_Kernel[3][3] = {{-1, -2, -1},{0, 0, 0},{1, 2, 1}};
 
+    int kernel_size = 3;
+
     //can't figure out how to make a 3x3 matrix around the
     int ULx = Gx_Kernel[0][0];
     int Ux = Gx_Kernel[0][1];
     int URx = Gx_Kernel[0][2];
     int Lx = Gx_Kernel[1][0];
     int Rx = Gx_Kernel[1][2];
-    int LLox = Gx_Kernel[2][0];
+    int LoLx = Gx_Kernel[2][0];
     int Lox = Gx_Kernel[2][1];
     int LoRx = Gx_Kernel[2][2];
 
@@ -189,7 +191,7 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
     int URy = Gy_Kernel[0][2];
     int Ly = Gy_Kernel[1][0];
     int Ry = Gy_Kernel[1][2];
-    int LLoy = Gy_Kernel[2][0];
+    int LoLy = Gy_Kernel[2][0];
     int Loy = Gy_Kernel[2][1];
     int LoRy = Gy_Kernel[2][2];
 
@@ -201,6 +203,11 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
         }
         printf("\n")
     } */
+
+    //copy image
+    int image_copy_R[height][width];
+    int image_copy_G[height][width];
+    int image_copy_B[height][width];
 
     int Gx_Red;
     int Gx_Green;
@@ -254,13 +261,13 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
 
                 else
                 {
-                    Gx_Red = image[i][j-1].rgbtRed * Lx + image[i-1][j-1].rgbtRed * LLox + image[i-1][j].rgbtRed * Lox;
-                    Gx_Green = image[i][j-1].rgbtGreen * Lx + image[i-1][j-1].rgbtGreen * LLox + image[i-1][j].rgbtGreen * Lox;
-                    Gx_Blue = image[i][j-1].rgbtBlue * Lx + image[i-1][j-1].rgbtBlue * LLox + image[i-1][j].rgbtBlue * Lox;
+                    Gx_Red = image[i][j-1].rgbtRed * Lx + image[i-1][j-1].rgbtRed * LoLx + image[i-1][j].rgbtRed * Lox;
+                    Gx_Green = image[i][j-1].rgbtGreen * Lx + image[i-1][j-1].rgbtGreen * LoLx + image[i-1][j].rgbtGreen * Lox;
+                    Gx_Blue = image[i][j-1].rgbtBlue * Lx + image[i-1][j-1].rgbtBlue * LoLx + image[i-1][j].rgbtBlue * Lox;
 
-                    Gy_Red = image[i][j-1].rgbtRed * Ly + image[i-1][j-1].rgbtRed * LLoy + image[i-1][j].rgbtRed * Loy;
-                    Gy_Green = image[i][j-1].rgbtGreen * Ly + image[i-1][j-1].rgbtGreen * LLoy + image[i-1][j].rgbtGreen * Loy;
-                    Gy_Blue = image[i][j-1].rgbtBlue * Ly + image[i-1][j-1].rgbtBlue * LLoy + image[i-1][j].rgbtBlue * Loy;
+                    Gy_Red = image[i][j-1].rgbtRed * Ly + image[i-1][j-1].rgbtRed * LoLy + image[i-1][j].rgbtRed * Loy;
+                    Gy_Green = image[i][j-1].rgbtGreen * Ly + image[i-1][j-1].rgbtGreen * LoLy + image[i-1][j].rgbtGreen * Loy;
+                    Gy_Blue = image[i][j-1].rgbtBlue * Ly + image[i-1][j-1].rgbtBlue * LoLy + image[i-1][j].rgbtBlue * Loy;
                 }
             }
 
@@ -270,6 +277,29 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
                 //printf("Edge "); //test edges
                 if (i == 0)
                 {
+                    Gx_Red = image[i][j-1].rgbtRed * Lx + image[i+1][j-1].rgbtRed * ULx + image[i+1][j].rgbtRed * Ux + image[i+1][j+1].rgbtRed * URx + image[i][j+1].rgbtRed * Rx;
+                    Gx_Green = image[i][j-1].rgbtGreen * Lx + image[i+1][j-1].rgbtGreen * ULx + image[i+1][j].rgbtGreen * Ux + image[i+1][j+1].rgbtGreen * URx + image[i][j+1].rgbtGreen * Rx;
+                    Gx_Blue = image[i][j-1].rgbtBlue * Lx + image[i+1][j-1].rgbtBlue * ULx + image[i+1][j].rgbtBlue * Ux + image[i+1][j+1].rgbtBlue * URx + image[i][j+1].rgbtBlue * Rx;
+
+                    Gy_Red = image[i][j-1].rgbtRed * Ly + image[i+1][j-1].rgbtRed * ULy + image[i+1][j].rgbtRed * Uy + image[i+1][j+1].rgbtRed * URy + image[i][j+1].rgbtRed * Ry;
+                    Gy_Green = image[i][j-1].rgbtGreen * Ly + image[i+1][j-1].rgbtGreen * ULy + image[i+1][j].rgbtGreen * Uy + image[i+1][j+1].rgbtGreen * URy + image[i][j+1].rgbtGreen * Ry;
+                    Gy_Blue = image[i][j-1].rgbtBlue * Ly + image[i+1][j-1].rgbtBlue * ULy + image[i+1][j].rgbtBlue * Uy + image[i+1][j+1].rgbtBlue * URy + image[i][j+1].rgbtBlue * Ry;
+
+                }
+
+                else if (i == height - 1)
+                {
+                    Gx_Red = image[i][j+1].rgbtRed * Rx + image[i-1][j+1].rgbtRed * LoRx + image[i-1][j].rgbtRed * Lox + image[i-1][j-1].rgbtRed * LoLx + image[i][j-1].rgbtRed * Lx;
+                    Gx_Green = image[i][j+1].rgbtGreen * Rx + image[i-1][j+1].rgbtGreen * LoRx + image[i-1][j].rgbtGreen * Lox + image[i-1][j-1].rgbtGreen * LoLx + image[i][j-1].rgbtGreen * Lx;
+                    Gx_Blue = image[i][j+1].rgbtBlue * Rx + image[i-1][j+1].rgbtBlue * LoRx + image[i-1][j].rgbtBlue * Lox + image[i-1][j-1].rgbtBlue * LoLx + image[i][j-1].rgbtBlue * Lx;
+
+                    Gy_Red = image[i][j+1].rgbtRed * Ry + image[i-1][j+1].rgbtRed * LoRy + image[i-1][j].rgbtRed * Loy + image[i-1][j-1].rgbtRed * LoLy + image[i][j-1].rgbtRed * Ly;
+                    Gy_Green = image[i][j+1].rgbtGreen * Ry + image[i-1][j+1].rgbtGreen * LoRy + image[i-1][j].rgbtGreen * Loy + image[i-1][j-1].rgbtGreen * LoLy + image[i][j-1].rgbtGreen * Ly;
+                    Gy_Blue = image[i][j+1].rgbtBlue * Ry + image[i-1][j+1].rgbtBlue * LoRy + image[i-1][j].rgbtBlue * Loy + image[i-1][j-1].rgbtBlue * LoLy + image[i][j-1].rgbtBlue * Ly;
+                }
+
+                else if (j == 0)
+                {
                     Gx_Red = image[i+1][j].rgbtRed * Ux + image[i+1][j+1].rgbtRed * URx + image[i][j+1].rgbtRed * Rx + image[i-1][j+1].rgbtRed * LoRx + image[i-1][j].rgbtRed * Lox;
                     Gx_Green = image[i+1][j].rgbtGreen * Ux + image[i+1][j+1].rgbtGreen * URx + image[i][j+1].rgbtGreen * Rx + image[i-1][j+1].rgbtGreen * LoRx + image[i-1][j].rgbtGreen * Lox;
                     Gx_Blue = image[i+1][j].rgbtBlue * Ux + image[i+1][j+1].rgbtBlue * URx + image[i][j+1].rgbtBlue * Rx + image[i-1][j+1].rgbtBlue * LoRx + image[i-1][j].rgbtBlue * Lox;
@@ -277,52 +307,75 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
                     Gy_Red = image[i+1][j].rgbtRed * Uy + image[i+1][j+1].rgbtRed * URy + image[i][j+1].rgbtRed * Ry + image[i-1][j+1].rgbtRed * LoRy + image[i-1][j].rgbtRed * Loy;
                     Gy_Green = image[i+1][j].rgbtGreen * Uy + image[i+1][j+1].rgbtGreen * URy + image[i][j+1].rgbtGreen * Ry + image[i-1][j+1].rgbtGreen * LoRy + image[i-1][j].rgbtGreen * Loy;
                     Gy_Blue = image[i+1][j].rgbtBlue * Uy + image[i+1][j+1].rgbtBlue * URy + image[i][j+1].rgbtBlue * Ry + image[i-1][j+1].rgbtBlue * LoRy + image[i-1][j].rgbtBlue * Loy;
-
-                }
-
-                else if (i == height - 1)
-                {
-
-                }
-
-                else if (j == 0)
-                {
-
                 }
 
                 else
                 {
+                    Gx_Red = image[i+1][j].rgbtRed * Ux + image[i+1][j-1].rgbtRed * ULx + image[i][j-1].rgbtRed * Lx + image[i-1][j-1].rgbtRed * LoLx + image[i-1][j].rgbtRed * Lx;
+                    Gx_Green = image[i+1][j].rgbtGreen * Ux + image[i+1][j-1].rgbtGreen * ULx + image[i][j-1].rgbtGreen * Lx + image[i-1][j-1].rgbtGreen * LoLx + image[i-1][j].rgbtGreen * Lx;
+                    Gx_Blue = image[i+1][j].rgbtBlue * Ux + image[i+1][j-1].rgbtBlue * ULx + image[i][j-1].rgbtBlue * Lx + image[i-1][j-1].rgbtBlue * LoLx + image[i-1][j].rgbtBlue * Lx;
 
+                    Gy_Red = image[i+1][j].rgbtRed * Uy + image[i+1][j-1].rgbtRed * ULy + image[i][j-1].rgbtRed * Ly + image[i-1][j-1].rgbtRed * LoLy + image[i-1][j].rgbtRed * Ly;
+                    Gy_Green = image[i+1][j].rgbtGreen * Uy + image[i+1][j-1].rgbtGreen * ULy + image[i][j-1].rgbtGreen * Ly + image[i-1][j-1].rgbtGreen * LoLy + image[i-1][j].rgbtGreen * Ly;
+                    Gy_Blue = image[i+1][j].rgbtBlue * Uy + image[i+1][j-1].rgbtBlue * ULy + image[i][j-1].rgbtBlue * Ly + image[i-1][j-1].rgbtBlue * LoLy + image[i-1][j].rgbtBlue * Ly;
                 }
             }
 
             //Non-edge or Non-corner pixels (has 8 neighboring pixels)
             else
             {
+                Gx_Red = image[i+1][j-1].rgbtRed*ULx + image[i+1][j].rgbtRed*Ux + image[i+1][j+1].rgbtRed*URx + image[i][j-1].rgbtRed*Lx +
+                image[i][j+1].rgbtRed*Rx + image[i-1][j-1].rgbtRed*LoLx + image[i-1][j].rgbtRed*Lox + image[i-1][j+1].rgbtRed*LoRx;
+                Gx_Green = image[i+1][j-1].rgbtGreen*ULx + image[i+1][j].rgbtGreen*Ux + image[i+1][j+1].rgbtGreen*URx + image[i][j-1].rgbtGreen*Lx +
+                image[i][j+1].rgbtGreen*Rx + image[i-1][j-1].rgbtGreen*LoLx + image[i-1][j].rgbtGreen*Lox + image[i-1][j+1].rgbtGreen*LoRx;
+                Gx_Blue = image[i+1][j-1].rgbtBlue*ULx + image[i+1][j].rgbtBlue*Ux + image[i+1][j+1].rgbtBlue*URx + image[i][j-1].rgbtBlue*Lx +
+                image[i][j+1].rgbtBlue*Rx + image[i-1][j-1].rgbtBlue*LoLx + image[i-1][j].rgbtBlue*Lox + image[i-1][j+1].rgbtBlue*LoRx;
 
+                Gy_Red = image[i+1][j-1].rgbtRed*ULy + image[i+1][j].rgbtRed*Uy + image[i+1][j+1].rgbtRed*URy + image[i][j-1].rgbtRed*Ly +
+                image[i][j+1].rgbtRed*Ry + image[i-1][j-1].rgbtRed*LoLy + image[i-1][j].rgbtRed*Loy + image[i-1][j+1].rgbtRed*LoRy;
+                Gy_Green = image[i+1][j-1].rgbtGreen*ULy + image[i+1][j].rgbtGreen*Uy + image[i+1][j+1].rgbtGreen*URy + image[i][j-1].rgbtGreen*Ly +
+                image[i][j+1].rgbtGreen*Ry + image[i-1][j-1].rgbtGreen*LoLy + image[i-1][j].rgbtGreen*Loy + image[i-1][j+1].rgbtGreen*LoRy;
+                Gy_Blue = image[i+1][j-1].rgbtBlue*ULy + image[i+1][j].rgbtBlue*Uy + image[i+1][j+1].rgbtBlue*URy + image[i][j-1].rgbtBlue*Ly +
+                image[i][j+1].rgbtBlue*Ry + image[i-1][j-1].rgbtBlue*LoLy + image[i-1][j].rgbtBlue*Loy + image[i-1][j+1].rgbtBlue*LoRy;
             }
+
+            //Sobel Algorithm
+        double n_red = round(sqrt(Gx_Red^2 + Gy_Red^2));
+        double n_green = round(sqrt(Gx_Green^2 + Gy_Green^2));
+        double n_blue = round(sqrt(Gx_Blue^2 + Gy_Blue^2));
+
+        //maximum value is 255...is there a better way to do this?
+        if (n_red > 255)
+        {
+            n_red = 255;
+        }
+
+        if (n_green > 255)
+        {
+            n_green = 255;
+        }
+
+        if (n_blue > 255)
+        {
+            n_blue = 255;
+        }
+
+        //Copy to a new image
+        image_copy_R[i][j] = n_red;
+        image_copy_G[i][j] = n_green;
+        image_copy_B[i][j] = n_blue;
+
         }
     }
 
-    //Sobel Algorithm
-    int n_red = sqrt(Gx_Red^2 + Gy_Red^2);
-    int n_green = sqrt(Gx_Green^2 + Gy_Green^2);
-    int n_blue = sqrt(Gx_Blue^2 + Gy_Blue^2);
-
-    //maximum value is 255...is there a better way to do this?
-    if (n_red > 255)
+    for (int k = 0; k < height; k++)
     {
-        n_red = 255;
-    }
-
-    if (n_green > 255)
-    {
-        n_green = 255;
-    }
-
-    if (n_blue > 255)
-    {
-        n_blue = 255;
+        for (int m = 0; m < width; m++)
+        {
+            image[k][m].rgbtRed = image_copy_R[k][m];
+            image[k][m].rgbtGreen = image_copy_G[k][m];
+            image[k][m].rgbtBlue = image_copy_B[k][m];
+        }
     }
 
     return;
