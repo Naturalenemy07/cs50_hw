@@ -175,40 +175,40 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
     int Gy_Kernel[3][3] = {{-1, -2, -1},{0, 0, 0},{1, 2, 1}};
 
     //can't figure out how to make a 3x3 matrix around the
-    int ULx = Gx_Kernel[1][1];
-    int Ux = Gx_Kernel[1][2];
-    int URx = Gx_Kernel[1][3];
-    int Lx = Gx_Kernel[2][1];
-    int Rx = Gx_Kernel[2][3];
-    int LLx = Gx_Kernel[3][1];
-    int Lx = Gx_Kernel[3][2];
-    int LRx = Gx_Kernel[3][3];
+    int ULx = Gx_Kernel[0][0];
+    int Ux = Gx_Kernel[0][1];
+    int URx = Gx_Kernel[0][2];
+    int Lx = Gx_Kernel[1][0];
+    int Rx = Gx_Kernel[1][2];
+    int LLox = Gx_Kernel[2][0];
+    int Lox = Gx_Kernel[2][1];
+    int LoRx = Gx_Kernel[2][2];
 
-    int ULy = Gy_Kernel[1][1];
-    int Uy = Gy_Kernel[1][2];
-    int URy = Gy_Kernel[1][3];
-    int Ly = Gy_Kernel[2][1];
-    int Ry = Gy_Kernel[2][3];
-    int LLy = Gy_Kernel[3][1];
-    int Ly = Gy_Kernel[3][2];
-    int LRy = Gy_Kernel[3][3];
+    int ULy = Gy_Kernel[0][0];
+    int Uy = Gy_Kernel[0][1];
+    int URy = Gy_Kernel[0][2];
+    int Ly = Gy_Kernel[1][0];
+    int Ry = Gy_Kernel[1][2];
+    int LLoy = Gy_Kernel[2][0];
+    int Loy = Gy_Kernel[2][1];
+    int LoRy = Gy_Kernel[2][2];
 
-    for (int i = 0; i < 3; i++)
+    /*for (int i = 0; i < 3; i++)
     {
         for (int j = 0; j < 3; j++)
         {
             printf("%i ", Gx_Kernel[i][j])
         }
         printf("\n")
-    }
+    } */
 
-    int Gx_Red[8];
-    int Gx_Green[8];
-    int Gx_Blue[8];
+    int Gx_Red;
+    int Gx_Green;
+    int Gx_Blue;
 
-    int Gy_Red[8];
-    int Gy_Green[8];
-    int Gy_Blue[8];
+    int Gy_Red;
+    int Gy_Green;
+    int Gy_Blue;
 
 
     for (int i = 0; i < height; i++)
@@ -255,11 +255,11 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
                 else
                 {
                     Gx_Red = image[i][j-1].rgbtRed * Lx + image[i-1][j-1].rgbtRed * LLox + image[i-1][j].rgbtRed * Lox;
-                    Gx_Green = image[i[j-1].rgbtGreen * Lx + image[i-1][j-1].rgbtGreen * LLox + image[i-1][j].rgbtGreen * Lox;
+                    Gx_Green = image[i][j-1].rgbtGreen * Lx + image[i-1][j-1].rgbtGreen * LLox + image[i-1][j].rgbtGreen * Lox;
                     Gx_Blue = image[i][j-1].rgbtBlue * Lx + image[i-1][j-1].rgbtBlue * LLox + image[i-1][j].rgbtBlue * Lox;
 
                     Gy_Red = image[i][j-1].rgbtRed * Ly + image[i-1][j-1].rgbtRed * LLoy + image[i-1][j].rgbtRed * Loy;
-                    Gy_Green = image[i[j-1].rgbtGreen * Ly + image[i-1][j-1].rgbtGreen * LLoy + image[i-1][j].rgbtGreen * Loy;
+                    Gy_Green = image[i][j-1].rgbtGreen * Ly + image[i-1][j-1].rgbtGreen * LLoy + image[i-1][j].rgbtGreen * Loy;
                     Gy_Blue = image[i][j-1].rgbtBlue * Ly + image[i-1][j-1].rgbtBlue * LLoy + image[i-1][j].rgbtBlue * Loy;
                 }
             }
@@ -270,6 +270,13 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
                 //printf("Edge "); //test edges
                 if (i == 0)
                 {
+                    Gx_Red = image[i+1][j].rgbtRed * Ux + image[i+1][j+1].rgbtRed * URx + image[i][j+1].rgbtRed * Rx + image[i-1][j+1].rgbtRed * LoRx + image[i-1][j].rgbtRed * Lox;
+                    Gx_Green = image[i+1][j].rgbtGreen * Ux + image[i+1][j+1].rgbtGreen * URx + image[i][j+1].rgbtGreen * Rx + image[i-1][j+1].rgbtGreen * LoRx + image[i-1][j].rgbtGreen * Lox;
+                    Gx_Blue = image[i+1][j].rgbtBlue * Ux + image[i+1][j+1].rgbtBlue * URx + image[i][j+1].rgbtBlue * Rx + image[i-1][j+1].rgbtBlue * LoRx + image[i-1][j].rgbtBlue * Lox;
+
+                    Gy_Red = image[i+1][j].rgbtRed * Uy + image[i+1][j+1].rgbtRed * URy + image[i][j+1].rgbtRed * Ry + image[i-1][j+1].rgbtRed * LoRy + image[i-1][j].rgbtRed * Loy;
+                    Gy_Green = image[i+1][j].rgbtGreen * Uy + image[i+1][j+1].rgbtGreen * URy + image[i][j+1].rgbtGreen * Ry + image[i-1][j+1].rgbtGreen * LoRy + image[i-1][j].rgbtGreen * Loy;
+                    Gy_Blue = image[i+1][j].rgbtBlue * Uy + image[i+1][j+1].rgbtBlue * URy + image[i][j+1].rgbtBlue * Ry + image[i-1][j+1].rgbtBlue * LoRy + image[i-1][j].rgbtBlue * Loy;
 
                 }
 
