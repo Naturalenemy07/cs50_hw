@@ -176,6 +176,7 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
 
     int kernel_size = 3;
 
+
     //can't figure out how to make a 3x3 matrix around the
     int ULx = Gx_Kernel[0][0];
     int Ux = Gx_Kernel[0][1];
@@ -222,6 +223,9 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int j = 0; j < width; j++)
         {
+
+            int grid[3][3] = {{image[i+1][j-1]},{image[i+1][j]},{//make grid, figure out an if statement if out of bounds-equal zero.
+
             //Corner pixels
             if ((i == 0 && j == 0) || (i == height-1 && j == 0) || (i == 0 && j == width-1) || (i == height-1 && j == width-1))
             {
