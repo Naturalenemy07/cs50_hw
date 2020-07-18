@@ -13,5 +13,10 @@ int main()
     printf("The size of a is: %lu bytes\n", sizeof(a));
     printf("The size of b is: %lu bytes\n", sizeof(b));
 
+    //printing the addresses of each charater(1st character of a), we discover that the printed pointer of a and the address are the same
+    //We discover that b and the address of b are different
+    printf("%p: %p\n", a, &a);
+    printf("%p: %p\n", b, &b);
+
     return 0;
 }
